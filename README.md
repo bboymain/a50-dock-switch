@@ -6,6 +6,8 @@ A tiny Windows tray app that watches your Astro A50 Gen 4 dock state and switche
 
 It ships with a full **Astro Command Center-style dashboard**: battery, EQ control, sidetone, mic level, noise gate, game:voice mix, per-device volume memory, and themes.
 
+![Dashboard screenshot](docs/screenshot.png)
+
 ## Features
 
 - **Automatic switching** — dock detection over USB HID, ~1 second to switch
