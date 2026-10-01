@@ -1,0 +1,8 @@
+hyperheadset
+hidapi
+pystray
+Pillow
+pycaw
+comtypes
+winotify
+pywebview
