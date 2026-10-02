@@ -1,6 +1,5 @@
 import json
 import os
-import re
 import subprocess
 import sys
 import threading
@@ -22,10 +21,6 @@ COMMAND_PATH = os.path.join(cfg.APPDIR, "command.json")
 SLIDER_MIC = 0x04
 SLIDER_SIDETONE = 0x05
 NOISE_GATE_MODES = ["STREAMING", "NIGHT", "HOME", "TOURNAMENT"]
-
-APP_VERSION = "v1.2"
-REPO_LATEST_API = "https://api.github.com/repos/bboymain/a50-dock-switch/releases/latest"
-LATEST_URL = "https://github.com/bboymain/a50-dock-switch/releases/latest"
 
 
 def _unhandled(t, v, tb):
@@ -143,17 +138,9 @@ def on_quit(icon, item):
     icon.stop()
 
 
-def _ver_tuple(tag):
-    try:
-        nums = re.findall(r"\d+", str(tag))
-        return tuple(int(n) for n in nums[:3]) if nums else (0,)
-    except Exception:
-        return (0,)
-
-
 def open_releases(icon, item):
     try:
-        os.startfile(LATEST_URL)
+        os.startfile(cfg.UPDATE_URL)
     except Exception as e:
         cfg.log("open releases failed: " + str(e))
 
@@ -168,9 +155,9 @@ def update_loop():
         err = ""
         try:
             req = urllib.request.Request(
-                REPO_LATEST_API,
+                cfg.UPDATE_API,
                 headers={
-                    "User-Agent": "a50-dock-switch/" + APP_VERSION,
+                    "User-Agent": "a50-dock-switch/" + cfg.APP_VERSION,
                     "Accept": "application/vnd.github+json",
                 },
             )
@@ -180,13 +167,13 @@ def update_loop():
                 err = "no tag_name in response"
         except Exception as e:
             err = str(e)
-        has = bool(tag) and _ver_tuple(tag) > _ver_tuple(APP_VERSION)
+        has = bool(tag) and cfg.ver_tuple(tag) > cfg.ver_tuple(cfg.APP_VERSION)
         if first or has != _update_available or (has and tag != _latest_version) or err != last_err:
             fresh = has and not _update_available
             _update_available = has
             _latest_version = tag if has else ""
             if has:
-                cfg.log("update check: %s available (installed %s)" % (tag, APP_VERSION))
+                cfg.log("update check: %s available (installed %s)" % (tag, cfg.APP_VERSION))
             elif err:
                 cfg.log("update check failed: " + err)
             else:
@@ -267,7 +254,7 @@ def write_status(state):
         "paused": cfg.get()["paused"],
         "default_id": default_id,
         "acc_running": _acc_cache,
-        "version": APP_VERSION,
+        "version": cfg.APP_VERSION,
         "update_available": _update_available,
         "latest_version": _latest_version,
         "ts": now,

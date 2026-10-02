@@ -118,6 +118,31 @@ class Api:
         os.startfile(cfg.APPDIR)
         return True
 
+    def check_update(self):
+        import urllib.request
+        tag = ""
+        err = ""
+        try:
+            req = urllib.request.Request(
+                cfg.UPDATE_API,
+                headers={
+                    "User-Agent": "a50-dock-switch/" + cfg.APP_VERSION,
+                    "Accept": "application/vnd.github+json",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=8) as r:
+                tag = json.loads(r.read().decode("utf-8")).get("tag_name") or ""
+            if not tag:
+                err = "no tag_name in response"
+        except Exception as e:
+            err = str(e)
+        if err:
+            cfg.log("manual update check failed: " + err)
+            return {"error": err}
+        update = cfg.ver_tuple(tag) > cfg.ver_tuple(cfg.APP_VERSION)
+        cfg.log("manual update check: %s (installed %s)" % (tag, cfg.APP_VERSION))
+        return {"tag": tag, "update": update, "current": cfg.APP_VERSION}
+
     def win_min(self):
         if webview.windows:
             webview.windows[0].minimize()

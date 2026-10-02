@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import sys
 import threading
 import time
@@ -7,6 +8,19 @@ import time
 APPDIR = os.path.join(os.environ["APPDATA"], "a50-dock-switch")
 CONFIG_PATH = os.path.join(APPDIR, "config.json")
 LOG_PATH = os.path.join(APPDIR, "events.log")
+
+APP_VERSION = "v1.3"
+REPO_URL = "https://github.com/bboymain/a50-dock-switch"
+UPDATE_API = "https://api.github.com/repos/bboymain/a50-dock-switch/releases/latest"
+UPDATE_URL = "https://github.com/bboymain/a50-dock-switch/releases/latest"
+
+
+def ver_tuple(tag):
+    try:
+        nums = re.findall(r"\d+", str(tag))
+        return tuple(int(n) for n in nums[:3]) if nums else (0,)
+    except Exception:
+        return (0,)
 
 DEFAULTS = {
     "interval": 1,

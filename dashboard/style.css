@@ -759,3 +759,16 @@ input[type="range"]::-moz-range-thumb {
 @keyframes updPulse {
   50% { box-shadow: 0 0 14px currentColor; opacity: 0.82; }
 }
+
+.upd-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.upd-ok { color: var(--ok); font-weight: 700; }
+.upd-bad { color: var(--bad); font-weight: 700; }
+.upd-link { color: var(--accent); font-weight: 800; text-decoration: none; }
+.upd-link:hover { text-decoration: underline; }

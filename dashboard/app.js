@@ -6,6 +6,7 @@ let volInfo = { A: { id: null, muted: false }, B: { id: null, muted: false } };
 let mixIds = { game: null, voice: null };
 let lastTelemTs = 0;
 let activePreset = 1;
+let manualUpd = "";
 
 function ready(cb) {
   if (window.pywebview && window.pywebview.api) cb();
@@ -164,9 +165,10 @@ async function refreshStatus() {
   }
   $("pollLine").innerHTML = "base station: <b>" + (state === "error" ? "offline" : "online") + "</b>";
   $("accLine").hidden = !s.acc_running;
-  const upd = s.update_available && s.latest_version ? s.latest_version : "";
+  const upd = s.update_available && s.latest_version ? s.latest_version : manualUpd;
   $("updPill").hidden = !upd;
   if (upd) $("updPill").textContent = "UPDATE " + upd + "  ↗";
+  if (s.version) $("aboutVer").textContent = "A50 DOCK SWITCH " + s.version;
   const offline = state === "error" && s.ts > 0;
   $("connectScreen").hidden = !offline;
   if (offline) {
@@ -397,6 +399,34 @@ function bind() {
 
   $("btnRefreshHist").addEventListener("click", refreshHistory);
   $("btnOpenLog").addEventListener("click", () => call("open_log_dir"));
+
+  $("btnCheckUpd").addEventListener("click", async () => {
+    const st = $("updStatus");
+    st.textContent = "CHECKING...";
+    st.className = "hint";
+    let r;
+    try {
+      r = await call("check_update");
+    } catch (e) {
+      r = { error: String(e) };
+    }
+    if (!r || r.error) {
+      st.textContent = "CHECK FAILED — TRY AGAIN";
+      st.className = "hint upd-bad";
+      return;
+    }
+    if (r.update) {
+      manualUpd = r.tag;
+      st.className = "hint upd-ok";
+      st.innerHTML =
+        '<a class="upd-link" href="' + "https://github.com/bboymain/a50-dock-switch/releases/latest" +
+        '" target="_blank" rel="noreferrer">' + escapeHtml(r.tag) + " AVAILABLE ↗</a>";
+    } else {
+      manualUpd = "";
+      st.textContent = "YOU'RE UP TO DATE (" + escapeHtml(r.current || "") + ")";
+      st.className = "hint upd-ok";
+    }
+  });
 
   bindVolume("A");
   bindVolume("B");
