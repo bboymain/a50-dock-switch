@@ -10,7 +10,7 @@ APPDIR = os.path.join(os.environ["APPDATA"], "a50-dock-switch")
 CONFIG_PATH = os.path.join(APPDIR, "config.json")
 LOG_PATH = os.path.join(APPDIR, "events.log")
 
-APP_VERSION = "v1.3"
+APP_VERSION = "v1.4"
 REPO_URL = "https://github.com/bboymain/a50-dock-switch"
 UPDATE_API = "https://api.github.com/repos/bboymain/a50-dock-switch/releases/latest"
 UPDATE_URL = "https://github.com/bboymain/a50-dock-switch/releases/latest"
