@@ -17,6 +17,7 @@ It ships with a full **Astro Command Center-style dashboard**: battery, EQ contr
 - **Live telemetry** — battery ring, charge state, dock state, preset names
 - **Command Center UI** — frameless window, boot splash, pulsing hero logo, connect-screen when the base station is offline, three themes (Astro Orange / Neon Glass / Minimal Dark)
 - **Autostart** — optional "Start with Windows"
+- **Update notifications** — checks GitHub releases on start and every 6 hours; shows a banner + tray link when a new version is out
 - **Notifications** — Windows toast on every switch
 
 ## Requirements
@@ -27,7 +28,7 @@ It ships with a full **Astro Command Center-style dashboard**: battery, EQ contr
 
 ## Install (prebuilt)
 
-1. Download `a50-dock-switch-v1.1.zip` (or grab it from Releases)
+1. Download `A50DockSwitch-v1.2.zip` from [Releases](https://github.com/bboymain/a50-dock-switch/releases)
 2. Unzip anywhere
 3. Run `A50DockSwitch.exe` — it lives in the system tray
 4. Open the dashboard from the tray menu, hit the gear, enable **Start with Windows**

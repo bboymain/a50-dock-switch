@@ -1,10 +1,12 @@
 import json
 import os
+import re
 import subprocess
 import sys
 import threading
 import time
 import traceback
+import urllib.request
 
 import pystray
 from PIL import Image, ImageDraw
@@ -20,6 +22,10 @@ COMMAND_PATH = os.path.join(cfg.APPDIR, "command.json")
 SLIDER_MIC = 0x04
 SLIDER_SIDETONE = 0x05
 NOISE_GATE_MODES = ["STREAMING", "NIGHT", "HOME", "TOURNAMENT"]
+
+APP_VERSION = "v1.2"
+REPO_LATEST_API = "https://api.github.com/repos/bboymain/a50-dock-switch/releases/latest"
+LATEST_URL = "https://github.com/bboymain/a50-dock-switch/releases/latest"
 
 
 def _unhandled(t, v, tb):
@@ -66,6 +72,8 @@ _last_status_ts = 0
 _acc_cache = False
 _acc_ts = 0
 _acc_warned = False
+_update_available = False
+_latest_version = ""
 
 hid_lock = threading.Lock()
 telem_refresh = threading.Event()
@@ -135,6 +143,63 @@ def on_quit(icon, item):
     icon.stop()
 
 
+def _ver_tuple(tag):
+    try:
+        nums = re.findall(r"\d+", str(tag))
+        return tuple(int(n) for n in nums[:3]) if nums else (0,)
+    except Exception:
+        return (0,)
+
+
+def open_releases(icon, item):
+    try:
+        os.startfile(LATEST_URL)
+    except Exception as e:
+        cfg.log("open releases failed: " + str(e))
+
+
+def update_loop():
+    global _update_available, _latest_version
+    time.sleep(15)
+    first = True
+    last_err = None
+    while _running:
+        tag = ""
+        err = ""
+        try:
+            req = urllib.request.Request(
+                REPO_LATEST_API,
+                headers={
+                    "User-Agent": "a50-dock-switch/" + APP_VERSION,
+                    "Accept": "application/vnd.github+json",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                tag = json.loads(resp.read().decode("utf-8")).get("tag_name") or ""
+            if not tag:
+                err = "no tag_name in response"
+        except Exception as e:
+            err = str(e)
+        has = bool(tag) and _ver_tuple(tag) > _ver_tuple(APP_VERSION)
+        if first or has != _update_available or (has and tag != _latest_version) or err != last_err:
+            fresh = has and not _update_available
+            _update_available = has
+            _latest_version = tag if has else ""
+            if has:
+                cfg.log("update check: %s available (installed %s)" % (tag, APP_VERSION))
+            elif err:
+                cfg.log("update check failed: " + err)
+            else:
+                cfg.log("update check: up to date")
+            if _icon:
+                _icon.update_menu()
+            if fresh:
+                notify("Update available: %s" % tag)
+        first = False
+        last_err = err
+        time.sleep(6 * 3600)
+
+
 def build_menu():
     return pystray.Menu(
         pystray.MenuItem(lambda item: STATE_TEXT.get(_state, _state), None, enabled=False),
@@ -142,6 +207,11 @@ def build_menu():
         pystray.MenuItem(
             lambda item: ("Resume" if cfg.get()["paused"] else "Pause"),
             on_toggle_pause,
+        ),
+        pystray.MenuItem(
+            lambda item: "Update available (%s)" % _latest_version,
+            open_releases,
+            visible=lambda item: _update_available,
         ),
         pystray.MenuItem("Open Dashboard...", open_dashboard),
         pystray.MenuItem("Quit", on_quit),
@@ -197,6 +267,9 @@ def write_status(state):
         "paused": cfg.get()["paused"],
         "default_id": default_id,
         "acc_running": _acc_cache,
+        "version": APP_VERSION,
+        "update_available": _update_available,
+        "latest_version": _latest_version,
         "ts": now,
     })
 
@@ -325,6 +398,7 @@ def poll_loop():
                     cfg.log("hint: Astro Command Center is running - close it "
                             "or dock switching will not work")
             time.sleep(1)
+            write_status("error")
             continue
         _acc_warned = False
 
@@ -405,6 +479,7 @@ def main():
 
     threading.Thread(target=poll_loop, daemon=True).start()
     threading.Thread(target=telemetry_loop, daemon=True).start()
+    threading.Thread(target=update_loop, daemon=True).start()
 
     _icon.run()
 

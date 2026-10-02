@@ -164,6 +164,9 @@ async function refreshStatus() {
   }
   $("pollLine").innerHTML = "base station: <b>" + (state === "error" ? "offline" : "online") + "</b>";
   $("accLine").hidden = !s.acc_running;
+  const upd = s.update_available && s.latest_version ? s.latest_version : "";
+  $("updPill").hidden = !upd;
+  if (upd) $("updPill").textContent = "UPDATE " + upd + "  ↗";
   const offline = state === "error" && s.ts > 0;
   $("connectScreen").hidden = !offline;
   if (offline) {
