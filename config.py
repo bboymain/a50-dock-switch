@@ -1,3 +1,4 @@
+import ctypes
 import json
 import os
 import re
@@ -13,6 +14,29 @@ APP_VERSION = "v1.3"
 REPO_URL = "https://github.com/bboymain/a50-dock-switch"
 UPDATE_API = "https://api.github.com/repos/bboymain/a50-dock-switch/releases/latest"
 UPDATE_URL = "https://github.com/bboymain/a50-dock-switch/releases/latest"
+
+DASHBOARD_TITLE = "Astro Command Center — A50 Dock Switch"
+
+_u32 = ctypes.windll.user32
+_u32.FindWindowW.argtypes = (ctypes.c_void_p, ctypes.c_wchar_p)
+_u32.FindWindowW.restype = ctypes.c_void_p
+_u32.IsIconic.argtypes = (ctypes.c_void_p,)
+_u32.ShowWindow.argtypes = (ctypes.c_void_p, ctypes.c_int)
+_u32.SetForegroundWindow.argtypes = (ctypes.c_void_p,)
+_u32.SetWindowPos.argtypes = (ctypes.c_void_p, ctypes.c_void_p, ctypes.c_int,
+                              ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_uint)
+
+
+def focus_dashboard():
+    hwnd = _u32.FindWindowW(None, DASHBOARD_TITLE)
+    if not hwnd:
+        return 0
+    if _u32.IsIconic(hwnd):
+        _u32.ShowWindow(hwnd, 9)
+    if not _u32.SetForegroundWindow(hwnd):
+        _u32.SetWindowPos(hwnd, ctypes.c_void_p(-1), 0, 0, 0, 0, 0x43)
+        _u32.SetWindowPos(hwnd, ctypes.c_void_p(-2), 0, 0, 0, 0, 0x43)
+    return hwnd
 
 
 def ver_tuple(tag):

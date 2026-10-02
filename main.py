@@ -116,6 +116,10 @@ def notify(msg):
 
 
 def open_dashboard():
+    hwnd = cfg.focus_dashboard()
+    cfg.log("dashboard open requested (hwnd=%d)" % hwnd)
+    if hwnd:
+        return
     if getattr(sys, "frozen", False):
         subprocess.Popen([sys.executable, "--dashboard"])
     else:
@@ -200,7 +204,7 @@ def build_menu():
             open_releases,
             visible=lambda item: _update_available,
         ),
-        pystray.MenuItem("Open Dashboard...", open_dashboard),
+        pystray.MenuItem("Open Dashboard...", open_dashboard, default=True),
         pystray.MenuItem("Quit", on_quit),
     )
 
