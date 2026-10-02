@@ -1,3 +1,4 @@
+import ctypes
 import json
 import os
 import time
@@ -12,6 +13,18 @@ STATUS_PATH = os.path.join(cfg.APPDIR, "status.json")
 TELEM_PATH = os.path.join(cfg.APPDIR, "telemetry.json")
 COMMAND_PATH = os.path.join(cfg.APPDIR, "command.json")
 LOG_PATH = os.path.join(cfg.APPDIR, "events.log")
+
+MUTEX_NAME = "Local\\A50DockSwitchDashboard"
+ERROR_ALREADY_EXISTS = 183
+
+_k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+_k32.CreateMutexW.argtypes = (ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
+_k32.CreateMutexW.restype = ctypes.c_void_p
+
+
+def _acquire_single_instance():
+    _k32.CreateMutexW(None, False, MUTEX_NAME)
+    return ctypes.get_last_error() != ERROR_ALREADY_EXISTS
 
 
 class Api:
@@ -155,11 +168,15 @@ class Api:
 
 
 def main():
+    if not _acquire_single_instance():
+        hwnd = cfg.focus_dashboard()
+        cfg.log("dashboard already running — focusing existing (hwnd=%d)" % hwnd)
+        return
     cfg.load()
     html = os.path.join(DIR, "dashboard", "index.html")
     api = Api()
     webview.create_window(
-        "Astro Command Center — A50 Dock Switch",
+        cfg.DASHBOARD_TITLE,
         "file:///" + html.replace("\\", "/"),
         js_api=api,
         width=1280,
