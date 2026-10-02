@@ -15,7 +15,7 @@ It ships with a full **Astro Command Center-style dashboard**: battery, EQ contr
 - **Volume memory** — remembers and restores volume per device on every switch
 - **Headset control** — EQ presets and 5-band gains, sidetone, mic level, noise gate, game:voice balance (writes are active-config only; nothing is persisted to the headset without your call)
 - **Live telemetry** — battery ring, charge state, dock state, preset names
-- **Command Center UI** — frameless window, boot splash, pulsing hero logo, connect-screen when the base station is offline, three themes (Astro Orange / Neon Glass / Minimal Dark)
+- **Command Center UI** — frameless window, boot splash, pulsing hero logo, settings page (poll interval, notifications, autostart, themes, update check), connect-screen when the base station is offline, three themes (Astro Orange / Neon Glass / Minimal Dark)
 - **Autostart** — optional "Start with Windows"
 - **Update notifications** — checks GitHub releases on start and every 6 hours, plus a manual **Check for Updates** button; banner + tray link when a new version is out
 - **Notifications** — Windows toast on every switch
