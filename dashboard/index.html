@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>A50 Dock Switch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,47 +19,33 @@
 <header class="topbar pywebview-drag-region">
   <div class="brand">
     <div class="logo">A50</div>
-    <div class="brand-text">
-      <h1>COMMAND CENTER</h1>
-      <span class="sub">// A50 DOCK SWITCH AUTOMATION</span>
-    </div>
+    <div class="brand-name">DOCK SWITCH</div>
+    <div class="brand-ver" id="aboutVerTop"></div>
   </div>
-
-  <nav class="tabs">
-    <button class="tab active" id="dashTab" data-tab="dashboard">DASHBOARD</button>
-  </nav>
-
-  <div class="top-right">
-    <div class="bat-chip" id="batChip">
-      <span class="bat-pct" id="batNum">--%</span>
-      <div class="bat-segs" id="batSegs">
-        <div class="seg"><i></i></div>
-        <div class="seg"><i></i></div>
-        <div class="seg"><i></i></div>
-        <div class="seg"><i></i></div>
-      </div>
-      <button class="bat-gear" id="batGear" title="Settings">
-        <svg class="cog" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
-      </button>
-    </div>
-    <div class="state-pill" id="statePill">
-      <span class="dot" id="pillDot"></span>
-      <span id="stateText">CONNECTING</span>
-    </div>
-    <select id="themePicker" class="theme-picker">
-      <option value="astro">ASTRO ORANGE</option>
-      <option value="neon">NEON GLASS</option>
-      <option value="minimal">MINIMAL DARK</option>
-    </select>
-    <div class="win-ctrls">
-      <button id="winMin" title="Minimize">&#9472;</button>
-      <button id="winClose" title="Close">&#10005;</button>
-    </div>
+  <div class="spacer"></div>
+  <div class="bat-chip" id="batChip">
+    <span class="bat-pct" id="batNum">--%</span>
+    <div class="bat-segs" id="batSegs"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="state-pill" id="statePill"><span class="dot" id="pillDot"></span><span id="stateText">CONNECTING</span></div>
+  <button class="auto-toggle" id="btnPause" title="Pause or resume automatic switching">
+    <span class="track"><span class="knob"></span></span>
+    <span id="autoLabel">AUTO SWITCH ON</span>
+  </button>
+  <button class="icon-btn" id="batGear" title="Settings">
+    <svg class="cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+  </button>
+  <div class="win-ctrls">
+    <button id="winMin" title="Minimize">&#9472;</button>
+    <button id="winClose" title="Close">&#10005;</button>
   </div>
 </header>
+
+<div class="acc-banner" id="accBanner" hidden>
+  <span class="dot bad"></span>
+  <span class="acc-text">Astro Command Center is running and has locked the headset. Dock detection is blind until it is closed.</span>
+  <span class="acc-cta">CLOSE ACC TO RESUME</span>
+</div>
 
 <main>
 
@@ -65,224 +53,204 @@
 
 <div class="connect-screen" id="connectScreen" hidden>
   <div class="map-img"></div>
-  <svg class="map-arcs" viewBox="0 0 100 100" preserveAspectRatio="none">
-    <path d="M29.4 27.4 Q 41 7 55 17.1" vector-effect="non-scaling-stroke"/>
-    <path d="M55 17.1 Q 73 9 88.8 29.1" vector-effect="non-scaling-stroke"/>
-    <path d="M17.2 31.1 Q 27 44 37.1 63.1" vector-effect="non-scaling-stroke"/>
-    <path d="M50 21.4 Q 58 26 65.4 36" vector-effect="non-scaling-stroke"/>
-  </svg>
-  <div class="city" style="--x:29.4%;--y:27.4%"><i></i><span>NEW YORK</span></div>
-  <div class="city" style="--x:50%;--y:21.4%"><i></i><span>LONDON</span></div>
-  <div class="city" style="--x:55%;--y:17.1%"><i></i><span>STOCKHOLM</span></div>
-  <div class="city flip" style="--x:88.8%;--y:29.1%"><i></i><span>TOKYO</span></div>
-  <div class="city" style="--x:17.2%;--y:31.1%"><i></i><span>LOS ANGELES</span></div>
-  <div class="city" style="--x:65.4%;--y:36%"><i></i><span>DUBAI</span></div>
-  <div class="city flip" style="--x:92%;--y:68.8%"><i></i><span>SYDNEY</span></div>
-  <div class="city" style="--x:37.1%;--y:63.1%"><i></i><span>SAO PAULO</span></div>
   <div class="connect-msg">
-    <svg class="rad" viewBox="0 0 48 48">
-      <circle cx="24" cy="24" r="6"></circle>
-      <path d="M28.5 31.79 A9 9 0 0 1 19.5 31.79 L14 41.32 A20 20 0 0 0 34 41.32 Z"></path>
-      <path d="M15 24 A9 9 0 0 1 19.5 16.21 L14 6.68 A20 20 0 0 0 4 24 Z"></path>
-      <path d="M28.5 16.21 A9 9 0 0 1 33 24 L44 24 A20 20 0 0 0 34 6.68 Z"></path>
-    </svg>
-    <div class="msg-lines">
-      <div>PLEASE CONNECT AN ASTRO A50 DEVICE</div>
-      <div id="cl2">OR SWITCH THE BASE STATION TO PC MODE</div>
-      <div>TO RESUME AUTO SWITCHING
-        <svg class="tri" viewBox="0 0 12 14"><path d="M0 0 L12 7 L0 14 Z"></path></svg>
-      </div>
-    </div>
+    <div class="pulse-dot"></div>
+    <div class="cm-title">BASE STATION NOT FOUND</div>
+    <div class="cm-body" id="cl2">Connect the A50 base station over USB and set it to PC mode. Auto switching resumes as soon as it is detected.</div>
   </div>
 </div>
 
+<!-- ============ DASHBOARD ============ -->
 <div class="page active" id="page-dashboard">
-<div class="grid">
+<div class="grid dash">
 
   <section class="card hero-card">
-    <h2>ASTRO A50 GEN 4</h2>
-    <div class="hero-logo-wrap">
-      <img src="assets/logo.png" class="hero-logo" alt="Astro A50">
+    <div class="hero-top">
+      <div class="hero-logo-wrap"><img src="assets/logo.png" class="hero-logo" alt="Astro A50"></div>
+      <div class="hero-text">
+        <div class="eyebrow">NOW PLAYING THROUGH</div>
+        <div class="state-big" id="stateBig">--</div>
+        <div class="hero-sub" id="heroSub">&nbsp;</div>
+        <div class="hero-meta" id="pollLine">base station: --</div>
+      </div>
     </div>
-    <div class="state-big" id="stateBig">--</div>
-    <div class="meta-line acc-warn" id="accLine" hidden>ASTRO COMMAND CENTER IS RUNNING — CLOSE IT</div>
-    <div class="meta-line" id="pollLine">base station: --</div>
-    <div class="meta-line" id="balanceLine">game:voice balance: --</div>
+    <div class="routes">
+      <div class="route" id="routeB">
+        <div class="route-head">
+          <div><div class="eyebrow">WHEN UNDOCKED</div><div class="route-title">HEADPHONES</div></div>
+          <span class="badge-active" id="badgeB" hidden><i></i>ACTIVE</span>
+          <button class="btn mini" id="btnHead">SWITCH NOW</button>
+        </div>
+        <select id="undockedSel"></select>
+        <div class="route-vol">
+          <div class="vol-head"><span>VOLUME</span><span class="vol-val" id="volValB">--%</span></div>
+          <div class="vol-row"><input type="range" min="0" max="100" value="50" id="volB"><button class="btn mini mute" id="muteB">MUTE</button></div>
+        </div>
+      </div>
+      <div class="route" id="routeA">
+        <div class="route-head">
+          <div><div class="eyebrow">WHEN DOCKED</div><div class="route-title">SPEAKERS</div></div>
+          <span class="badge-active" id="badgeA" hidden><i></i>ACTIVE</span>
+          <button class="btn mini" id="btnSpeakers">SWITCH NOW</button>
+        </div>
+        <select id="dockedSel"></select>
+        <div class="route-vol">
+          <div class="vol-head"><span>VOLUME</span><span class="vol-val" id="volValA">--%</span></div>
+          <div class="vol-row"><input type="range" min="0" max="100" value="50" id="volA"><button class="btn mini mute" id="muteA">MUTE</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="hint-row"><span class="hint">Volume is remembered per device and restored on every switch.</span><span class="hint" id="routeMsg"></span></div>
   </section>
 
-  <section class="card">
-    <h2>EQUALIZER</h2>
-    <div class="preset-row" id="presetRow">
+  <section class="card eq-card">
+    <div class="card-head"><h2>EQUALIZER</h2><button class="link-btn" id="eqReset">RESET</button></div>
+    <div class="seg-row" id="presetRow">
       <button class="preset" data-preset="1">PRESET 1</button>
       <button class="preset" data-preset="2">PRESET 2</button>
       <button class="preset" data-preset="3">PRESET 3</button>
     </div>
     <div class="eq-wrap">
-      <div class="eq-scale"><span>+7</span><span>0</span><span>-7</span></div>
-      <div class="eq-bands">
-        <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq0"><label>BAND 1</label></div>
-        <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq1"><label>BAND 2</label></div>
-        <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq2"><label>BAND 3</label></div>
-        <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq3"><label>BAND 4</label></div>
-        <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq4"><label>BAND 5</label></div>
+      <div class="eq-plot">
+        <svg viewBox="0 0 400 160" preserveAspectRatio="none">
+          <line x1="0" y1="80" x2="400" y2="80" class="eq-zero"></line>
+          <path id="eqFill" class="eq-fill" d=""></path>
+          <path id="eqLine" class="eq-line" d=""></path>
+        </svg>
+        <div class="eq-bands">
+          <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq0"></div>
+          <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq1"></div>
+          <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq2"></div>
+          <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq3"></div>
+          <div class="eq-band"><input type="range" min="-7" max="7" step="1" value="0" id="eq4"></div>
+        </div>
+      </div>
+      <div class="eq-labels">
+        <div><b id="eqv0">0</b><span>BAND 1</span></div>
+        <div><b id="eqv1">0</b><span>BAND 2</span></div>
+        <div><b id="eqv2">0</b><span>BAND 3</span></div>
+        <div><b id="eqv3">0</b><span>BAND 4</span></div>
+        <div><b id="eqv4">0</b><span>BAND 5</span></div>
       </div>
     </div>
     <span class="hint" id="eqMsg"></span>
   </section>
 
   <section class="card">
-    <h2>MICROPHONE</h2>
-    <div class="vol-block">
-      <div class="vol-head"><span>SIDETONE (HEAR YOURSELF)</span><span class="vol-val" id="sidetoneVal">--%</span></div>
+    <div class="card-head"><h2>MICROPHONE</h2></div>
+    <div class="slider-block">
+      <div class="vol-head"><span>Sidetone</span><span class="vol-val" id="sidetoneVal">--%</span></div>
       <input type="range" min="0" max="100" value="50" id="sidetoneSlider">
     </div>
-    <div class="vol-block">
-      <div class="vol-head"><span>MIC LEVEL</span><span class="vol-val" id="micVal">--%</span></div>
+    <div class="slider-block">
+      <div class="vol-head"><span>Mic level</span><span class="vol-val" id="micVal">--%</span></div>
       <input type="range" min="0" max="100" value="50" id="micSlider">
     </div>
-    <div class="preset-row" id="gateRow">
-      <button class="preset" data-gate="0">STREAMING</button>
-      <button class="preset" data-gate="1">NIGHT</button>
-      <button class="preset" data-gate="2">HOME</button>
-      <button class="preset" data-gate="3">TOURNAMENT</button>
+    <div class="gate">
+      <div class="eyebrow">NOISE GATE</div>
+      <div class="seg-row" id="gateRow">
+        <button class="preset" data-gate="0">STREAM</button>
+        <button class="preset" data-gate="1">NIGHT</button>
+        <button class="preset" data-gate="2">HOME</button>
+        <button class="preset" data-gate="3">TOURNEY</button>
+      </div>
     </div>
     <span class="hint" id="micMsg"></span>
   </section>
 
   <section class="card">
-    <h2>GAME : VOICE MIX</h2>
-    <div class="vol-block">
-      <div class="vol-head"><span>GAME OUTPUT</span><span class="vol-val" id="gameVal">--%</span></div>
-      <input type="range" min="0" max="100" value="50" id="gameSlider">
+    <div class="card-head"><h2>GAME : VOICE</h2></div>
+    <div class="balance">
+      <div><div class="eyebrow">GAME</div><div class="big-num" id="balGame">--</div></div>
+      <div class="r"><div class="eyebrow">VOICE</div><div class="big-num" id="balVoice">--</div></div>
     </div>
-    <div class="vol-block">
-      <div class="vol-head"><span>VOICE OUTPUT</span><span class="vol-val" id="voiceVal">--%</span></div>
-      <input type="range" min="0" max="100" value="50" id="voiceSlider">
+    <div class="bal-bar"><i id="balFill"></i></div>
+    <div class="mix-pair">
+      <div class="slider-block">
+        <div class="vol-head"><span>Game out</span><span class="vol-val" id="gameVal">--%</span></div>
+        <input type="range" min="0" max="100" value="50" id="gameSlider">
+      </div>
+      <div class="slider-block">
+        <div class="vol-head"><span>Voice out</span><span class="vol-val" id="voiceVal">--%</span></div>
+        <input type="range" min="0" max="100" value="50" id="voiceSlider">
+      </div>
     </div>
     <div class="hint">Route games to GAME and Discord to VOICE in Windows app settings.</div>
     <span class="hint" id="mixMsg"></span>
   </section>
 
   <section class="card">
-    <h2>AUDIO ROUTING</h2>
-    <div class="route-row">
-      <label>WHEN DOCKED &mdash; SWITCH TO</label>
-      <select id="dockedSel"></select>
-    </div>
-    <div class="route-row">
-      <label>WHEN UNDOCKED &mdash; SWITCH TO</label>
-      <select id="undockedSel"></select>
-    </div>
-    <div class="row-end">
-      <span class="hint" id="routeMsg"></span>
-      <button class="btn primary" id="saveRoute">SAVE ROUTING</button>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>MANUAL CONTROL</h2>
-    <div class="btn-col">
-      <button class="btn primary" id="btnHead">&#127911; SWITCH TO HEADPHONES</button>
-      <button class="btn" id="btnSpeakers">&#128266; SWITCH TO SPEAKERS</button>
-      <button class="btn warn" id="btnPause">PAUSE AUTOMATION</button>
-    </div>
-    <div class="meta-line" id="defaultLine">current default: --</div>
+    <div class="card-head"><h2>ACTIVITY</h2><span class="hint" id="defaultLine"></span></div>
+    <div class="log" id="historyMini"></div>
     <span class="hint" id="ctrlMsg"></span>
   </section>
 
-  <section class="card card-full">
-    <h2>VOLUME MEMORY</h2>
-    <div class="vol-split">
-      <div class="vol-block">
-        <div class="vol-head">
-          <span id="volLabelA">DOCKED</span>
-          <span class="vol-val" id="volValA">--%</span>
-        </div>
-        <div class="vol-row">
-          <input type="range" min="0" max="100" value="50" id="volA">
-          <button class="btn mini" id="muteA">MUTE</button>
-        </div>
-      </div>
-      <div class="vol-block">
-        <div class="vol-head">
-          <span id="volLabelB">UNDOCKED</span>
-          <span class="vol-val" id="volValB">--%</span>
-        </div>
-        <div class="vol-row">
-          <input type="range" min="0" max="100" value="50" id="volB">
-          <button class="btn mini" id="muteB">MUTE</button>
-        </div>
-      </div>
-    </div>
-    <div class="hint">Remembered per device and restored on every switch.</div>
-  </section>
-
 </div>
 </div>
 
+<!-- ============ SETTINGS ============ -->
 <div class="page" id="page-settings">
-<div class="grid">
+<div class="grid set">
 
   <section class="card">
-    <h2>SETTINGS</h2>
-    <div class="set-grid">
-      <label>Poll every (sec, 0 = fastest)</label>
+    <div class="card-head"><h2>DETECTION</h2></div>
+    <div class="set-row">
+      <div><div class="set-label">Poll interval</div><div class="set-sub">Seconds between dock checks, 0 = fastest</div></div>
       <input type="number" id="setInterval" min="0" max="30" step="1">
-      <label>Confirm after (reads)</label>
+    </div>
+    <div class="set-row">
+      <div><div class="set-label">Confirm after</div><div class="set-sub">Consecutive reads before switching</div></div>
       <input type="number" id="setDebounce" min="1" max="10" step="1">
     </div>
-    <div class="check-list">
-      <label class="check"><input type="checkbox" id="chkNotify"><span>Switch notifications</span></label>
-      <label class="check"><input type="checkbox" id="chkAutostart"><span>Start with Windows</span></label>
+    <div class="card-head sp"><h2>SYSTEM</h2></div>
+    <div class="set-row">
+      <div><div class="set-label">Switch notifications</div><div class="set-sub">Windows toast on every switch</div></div>
+      <label class="switch"><input type="checkbox" id="chkNotify"><span></span></label>
+    </div>
+    <div class="set-row">
+      <div><div class="set-label">Start with Windows</div><div class="set-sub">Launch to the tray at sign-in</div></div>
+      <label class="switch"><input type="checkbox" id="chkAutostart"><span></span></label>
     </div>
     <span class="hint" id="setMsg"></span>
   </section>
 
-  <section class="card card-wide">
-    <h2>ABOUT</h2>
+  <section class="card">
+    <div class="card-head"><h2>THEME</h2></div>
+    <div class="themes" id="themeRow">
+      <button class="theme-opt" data-theme-pick="astro"><span class="sw"><i style="flex:2;background:#ff6a00"></i><i style="background:#121214"></i><i style="background:#222225"></i></span>ASTRO ORANGE</button>
+      <button class="theme-opt" data-theme-pick="neon"><span class="sw"><i style="flex:2;background:#00e5ff"></i><i style="background:#12122a"></i><i style="background:#26264a"></i></span>NEON GLASS</button>
+      <button class="theme-opt" data-theme-pick="minimal"><span class="sw"><i style="flex:2;background:#7c9cff"></i><i style="background:#17171b"></i><i style="background:#26262c"></i></span>MINIMAL DARK</button>
+    </div>
+    <div class="card-head sp"><h2>ABOUT</h2></div>
     <div class="about-body">
       <img src="assets/logo.png" class="about-logo" alt="">
       <div class="about-text">
-        <div class="about-lead">AUTOMATED AUDIO, BECAUSE THE WINDOWS MIXER GOT OLD FAST.</div>
-        <p>Dock the headset &mdash; it's speakers. Undock it &mdash; it's headphones. No more
-        digging through sound settings every time you put the headset down. Set it once,
-        then forget it exists.</p>
+        <p>Dock the headset and it switches to speakers. Undock it and it switches to headphones. Set it once.</p>
         <div class="about-links">
-          <a class="about-x" href="https://github.com/bboymain/a50-dock-switch" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            <span>GitHub</span>
-          </a>
-          <a class="about-x" href="https://x.com/mainlek" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            <span>@mainlek</span>
-          </a>
-          <span class="about-ver" id="aboutVer">A50 DOCK SWITCH</span>
+          <a class="about-x" href="https://github.com/bboymain/a50-dock-switch" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="about-x" href="https://x.com/mainlek" target="_blank" rel="noreferrer">@mainlek</a>
         </div>
       </div>
     </div>
     <div class="upd-row">
       <button class="btn mini" id="btnCheckUpd">CHECK FOR UPDATES</button>
       <span class="hint" id="updStatus"></span>
+      <span class="about-ver" id="aboutVer">A50 DOCK SWITCH</span>
     </div>
   </section>
 
   <section class="card card-full">
-    <h2>EVENT HISTORY</h2>
-    <div class="history" id="history"></div>
-    <div class="row-end">
-      <span class="hint" id="histMsg"></span>
-      <div>
-        <button class="btn mini" id="btnRefreshHist">REFRESH</button>
-        <button class="btn mini" id="btnOpenLog">OPEN FOLDER</button>
-      </div>
+    <div class="card-head"><h2>EVENT HISTORY</h2>
+      <div><button class="btn mini" id="btnRefreshHist">REFRESH</button><button class="btn mini" id="btnOpenLog">OPEN FOLDER</button></div>
     </div>
+    <div class="log big" id="history"></div>
+    <span class="hint" id="histMsg"></span>
   </section>
 
 </div>
 </div>
 
 </main>
-
 <script src="app.js"></script>
 </body>
 </html>
